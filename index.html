@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meetings</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper container">
+        <div class="events events--empty">
+            <span class="events__text">Мероприятия отстутствуют</span>
+            <select class="events__select" >
+                <option class="events__option" disabled selected hidden>Дата</option>
+            </select>
+        </div>
+
+        <form class="form" id="creational_form">
+            <h2 class="form__title">Добавить мероприятие</h2>
+            <div class="form__labels">
+                <label for="title" class="label">
+                    <span class="label__text">Название</span>
+                    <input name="title" id="title" type="text" class="label__input">
+                    <span class="error"></span>
+                </label>
+                <label for="date" class="label">
+                    <span class="label__text">Дата</span>
+                    <input name="date" id="date" type="date" class="label__input">
+                    <span class="error"></span>
+                </label>
+                <label for="start_time" class="label">
+                    <span class="label__text">Время начала</span>
+                    <input name="start_time" id="start_time" type="time" class="label__input">
+                    <span class="error"></span>
+                </label>
+                <label for="end_time" class="label">
+                    <span class="label__text">Время конца</span>
+                    <input name="end_time" id="end_time" type="time" class="label__input">
+                    <span class="error"></span>
+                </label>
+            </div>
+            <button class="form__button button button--orange">Добавить</button>
+        </form>
+    </div>
+</body>
+
+</html>

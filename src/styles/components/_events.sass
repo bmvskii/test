@@ -1,0 +1,38 @@
+.events
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+
+    min-height: 170px
+    width: 100%
+
+    &__text
+        font-size: 36px
+        transform: none
+        transition: $transition
+        align-self: center
+        transform: scale(0)
+        width: 0
+    
+    &__select
+        opacity: 1
+        transition: $transition
+
+        width: 50%
+
+        margin-bottom: 10px
+        padding: 5px 10px
+
+        background-color: rgba($color: $gray, $alpha: .5)
+        
+    &--empty
+        flex-direction: row
+
+        .events
+            &__text
+                transform: none
+                width: auto
+            &__select
+                opacity: 0
+                width: 0

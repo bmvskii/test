@@ -1,0 +1,60 @@
+.event
+    display: flex
+    justify-content: space-between
+
+    padding: 10px
+
+    &__start-time,
+    &__end-time
+        margin-right: 10px
+
+    &__left-side,
+    &__right-side
+        display: flex
+        align-items: center
+
+    .control
+        &s
+            display: flex
+
+        &-btn
+            background-color: unset
+            margin: 0
+            border: none
+            cursor: pointer 
+            transition: $transition
+            font-size: 1.1rem
+
+            &:hover
+                color: $orange
+
+    &-container
+        display: flex
+        flex-direction: column
+        border-radius: 4px
+
+        width: calc(50% - 20px)
+        border: 1px solid $gray
+
+        transition: $transition
+
+        overflow: hidden
+        max-height: 0
+        opacity: 0
+
+        &--active
+            opacity: 1
+            max-height: 500px
+
+        &__wrapper
+            min-height: 200px
+            max-height: 200px
+            overflow-y: auto
+
+        &__title
+            background-color: rgba($color: $gray, $alpha: .5)
+            color: $black
+            margin: 0
+
+            text-align: center
+            padding: 10px 15px
