@@ -35,7 +35,7 @@ export class EventView {
         eventsContainer.classList.remove('events--empty');
 
         const isAlreadyInList = Array
-            .from(select.childNodes)
+            .from(select.children)
             .some(option => option.value === this.getFormattedDate());
 
         if (!isAlreadyInList) {
@@ -51,17 +51,11 @@ export class EventView {
     }
 
     addEvent(eventDetails) {
-        console.log(this.events);
-
         this.ref
             .querySelector('.event-container__wrapper')
             .appendChild(eventDetails.ref);
 
         this.events.push(eventDetails);
-    }
-
-    static getAllEventViews() {
-        return document.querySelectorAll('.event-container');
     }
 
     getState() {

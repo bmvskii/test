@@ -1,12 +1,12 @@
 import { EventDetails, EventView } from './eventView/eventView';
-import { getCurrentEventView } from './helpers';
+import { getCurrentEventView, getActiveEventView, activateViewClass } from './helpers';
 import { validate, resetInputStateAndData } from './validation'
 
 require('normalize.css/normalize.css');
 require('../styles/index.sass');
 
 document.addEventListener("DOMContentLoaded", () => {
-    const eventViews = [];
+    let eventViews = [];
     const form = document.getElementById('creational_form'),
         title = document.querySelector('[for="title"]'),
         end_time = document.querySelector('[for="end_time"]'),
@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!eventView) {
                     eventView = new EventView();
                     eventView.create(eventDate);
+                    eventViews.push(eventView);
                 }
 
                 //Set an event and add container to DOM
@@ -55,12 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventView.dropToDOM();
 
                 //If it is the first container then makes it active
-                if (eventViews.length === 0) {
+                if (eventViews.length === 1) {
                     eventView.isActive = true;
-                    eventView.ref.classList.add('event-container--active');
+                    activateViewClass(eventView.ref);
                 }
 
-                eventViews.push(eventView);
+                end_time.focus();
+                start_time.focus();
             }
         }
     });
@@ -80,17 +82,33 @@ document.addEventListener("DOMContentLoaded", () => {
             event.remove();
 
             if (!eventsWrapper.childElementCount) {
-                const title = element.closest('.event-container__title');
-                // const array = Array
-                //     .from(select.childNodes)
-                //     .some(option => option.value !== title.innerHTML);
 
-                console.log(title);
+                // Get all inactive container
+                eventViews = eventViews.filter(view => view.isActive === false);
 
+                if (eventViews.length > 0) {
+                    const activeElementTitle = eventView.querySelector('.event-container__title');
+                    const lastElementIndex = eventViews.length - 1;
+
+                    eventViews[lastElementIndex].isActive = true;
+                    eventViews[lastElementIndex].ref.classList.add('event-container--active');
+
+                    //Update values in select
+                    Array
+                        .from(select.children)
+                        .forEach(option => {
+                            if (option.value === activeElementTitle.innerHTML) {
+                                option.remove();
+                            }
+                        });
+
+                }
+
+                // Finally remove the container
                 eventView.remove();
-                eventViews[0].isActive = true;
             }
 
+            // If there are no containers in the wrapper, toggle it to the empty state 
             if (!eventViewsWrapper.querySelector('.event-container')) {
                 eventViewsWrapper.classList.add('events--empty');
             }
@@ -108,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     select.addEventListener('change', event => {
         const selectedDate = event.target.selectedOptions[0].value;
 
-        const activeView = eventViews.filter(view => view.isActive)[0];
+        const activeView = getActiveEventView(eventViews)[0];
         activeView.isActive = false;
         activeView.ref.classList.remove('event-container--active');
 
